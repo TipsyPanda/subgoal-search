@@ -2,6 +2,7 @@ import os
 import logging
 import platform
 import sys
+sys.path.append("./third_party/INT/visualization")
 sys.path.append("./third_party/INT")
 # To import alpacka stuff do not use `import third_party.alpacka...`, but simply
 # `import alpacka...`. Otherwise __init__.py files will be called twice, which
@@ -61,8 +62,8 @@ def _parse_args():
 @gin.configurable()
 def run(job_class):
     metric_logging.log_text('host_name', platform.node())
-    metric_logging.log_text('n_gpus', str(torch.cuda.device_count()))
-
+    metric_logging.log_text('n_gpus:', str(torch.cuda.device_count()))
+    
     job = job_class()
     return job.execute()
 
