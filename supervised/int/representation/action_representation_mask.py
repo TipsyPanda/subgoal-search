@@ -3,8 +3,8 @@ from metric_logging import log_text
 from supervised.int.representation import base
 from supervised.int.representation.infix import VOCABULARY, split_formula_to_lexemes, OBJECTIVE_LEXEME, \
     CONDITION_LEXEME, DESTINATION_LEXEME, BOS_LEXEME, EOS_LEXEME
-from visualization import seq_parse
-from visualization.seq_parse import entity_to_seq_string
+from third_party.INT.visualization import seq_parse
+from third_party.INT.visualization.seq_parse import entity_to_seq_string
 
 PADDING_LEXEME = '_'
 MASK_SEPARATOR_LEXEME = ':'

@@ -4,8 +4,8 @@ import string
 from supervised.int.utils import theorem_names
 from metric_logging import log_text
 from supervised.int.representation import base
-from visualization import seq_parse
-from visualization.seq_parse import entity_to_seq_string
+from third_party.INT.visualization import seq_parse
+from third_party.INT.visualization.seq_parse import entity_to_seq_string
 
 CONDITION_LEXEME = '&'
 OBJECTIVE_LEXEME = '#'

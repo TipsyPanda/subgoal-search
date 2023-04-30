@@ -1,0 +1,20 @@
+# Rush subgoal generator; k = 4
+
+run.job_class = @jobs.TrainHfForRushGoal
+
+TrainHfForRushGoal.n_iterations = 6000
+TrainHfForRushGoal.epochs_per_iteration = 1
+TrainHfForRushGoal.eval_every_n_iterations = 20
+TrainHfForRushGoal.generate_every_n_iterations = 20
+TrainHfForRushGoal.fresh_dataset_per_iteration = True
+
+TrainHfForRushGoal.batch_size = 32
+TrainHfForRushGoal.learning_rate = 3e-4
+TrainHfForRushGoal.lr_schedule = @InverseSqrtWithWarmup
+InverseSqrtWithWarmup.warmup_steps = 4000
+
+TrainHfForRushGoal.init_hf_seed = 42
+TrainHfForRushGoal.duplicate_hf_logs = True
+
+gen_Rush_data.n_random_moves.value = 20
+gen_Rush_data.subgoal_skipped_steps.value = 7

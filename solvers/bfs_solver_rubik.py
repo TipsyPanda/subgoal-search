@@ -13,7 +13,7 @@ from policies import ConditionalPolicyRubik, VanillaPolicyRubik
 
 # from utils.utils_sokoban import get_field_index_from_name, HashableNumpyArray
 # from value_estimators.int.value_estimator_int import TrivialValueEstimatorINT
-# from visualization.seq_parse import logic_statement_to_seq_string
+# from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string
 
 
 class SolverNode:

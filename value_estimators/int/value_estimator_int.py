@@ -12,7 +12,7 @@ from supervised.int.hf_data import GoalDataset
 from supervised.int.representation.infix_value import DISTANCE_TOKENS, PADDING_LEXEME
 from utils import hf
 from utils import hf_generate
-from visualization.seq_parse import logic_statement_to_seq_string
+from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string
 
 
 class TrivialValueEstimatorINT:

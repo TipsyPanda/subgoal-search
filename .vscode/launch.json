@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Debug with Arguments",
+            "type": "python",
+            "request": "launch",
+            "python": "/opt/conda/bin/python",
+            "program": "/home/yannick_schmid/subgoal-search/runner.py",
+            "args": [
+                "--config_file=configs/rush/solve/baseline.gin",
+                "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
+                "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
+                "--config=JobSolveRush.n_jobs=1"
+            ],
+            "env": {
+                "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
+            },
+            "console": "integratedTerminal"
+        }
+    ]
+}

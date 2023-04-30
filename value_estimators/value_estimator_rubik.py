@@ -14,7 +14,7 @@ from supervised.rubik.rubik_solver_utils import cube_to_string, \
     generate_problems_rubik
 from utils import hf
 from utils import hf_generate
-# from visualization.seq_parse import logic_statement_to_seq_string
+# from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string
 
 
 # class TrivialValueEstimatorRubik:

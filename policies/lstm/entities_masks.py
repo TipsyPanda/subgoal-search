@@ -1,4 +1,4 @@
-from visualization.seq_parse import entity_to_seq_string
+from third_party.INT.visualization.seq_parse import entity_to_seq_string
 
 
 class EntityMask:

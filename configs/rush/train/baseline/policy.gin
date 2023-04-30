@@ -1,0 +1,20 @@
+# Rush baseline policy; k = 4
+
+run.job_class = @jobs.TrainHfForRushValidatePolicy
+TrainHfForRushValidatePolicy.is_brutal = True
+
+TrainHfForRushValidatePolicy.n_iterations = 6000
+TrainHfForRushValidatePolicy.epochs_per_iteration = 1
+TrainHfForRushValidatePolicy.eval_every_n_iterations = 20
+TrainHfForRushValidatePolicy.generate_every_n_iterations = 20
+TrainHfForRushValidatePolicy.fresh_dataset_per_iteration = True
+
+TrainHfForRushValidatePolicy.batch_size = 32
+TrainHfForRushValidatePolicy.learning_rate = 3e-4
+TrainHfForRushValidatePolicy.lr_schedule = @InverseSqrtWithWarmup
+InverseSqrtWithWarmup.warmup_steps = 4000
+
+TrainHfForRushValidatePolicy.init_hf_seed = 7465743
+TrainHfForRushValidatePolicy.duplicate_hf_logs = True
+
+gen_Rush_data.n_random_moves.value = 10

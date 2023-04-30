@@ -1,6 +1,6 @@
 from data_generation.generate_problems import generate_problem
 from envs.int.theorem_prover_env import TheoremProverEnv
-from visualization.seq_parse import logic_statement_to_seq_string
+from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string
 
 
 def generate_problem_with_final_statement(num_axioms, length, train_test, env=None, **kwargs):

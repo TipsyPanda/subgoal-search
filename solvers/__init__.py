@@ -3,6 +3,7 @@ import gin
 from solvers import solver_sokoban
 from solvers import bfs_solver_int
 from solvers import bfs_solver_rubik
+from solvers import bfs_solver_rush
 
 
 def configure_solver(goal_generator_class):
@@ -14,3 +15,4 @@ def configure_solver(goal_generator_class):
 BestFSSolverSokoban = configure_solver(solver_sokoban.BestFSSolverSokoban)
 BestFSSolverINT = configure_solver(bfs_solver_int.BestFSSolverINT)
 BestFSSolverRubik = configure_solver(bfs_solver_rubik.BestFSSolverRubik)
+BestFSSolverRush = configure_solver(bfs_solver_rush.BestFSSolverRush)

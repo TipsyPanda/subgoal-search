@@ -8,11 +8,11 @@ from gym.utils import seeding
 from proof_system.all_axioms import all_axioms_to_prove
 from proof_system.prover import Prover
 from supervised.int.utils import index2thm
-from visualization.latex_parse import logic_statement_to_latex, entity_to_latex
+from third_party.INT.visualization.latex_parse import logic_statement_to_latex, entity_to_latex
 from data_generation.generate_problems import generate_problem
 import random
 
-from visualization.seq_parse import entity_to_seq_string
+from third_party.INT.visualization.seq_parse import entity_to_seq_string
 
 random.seed(124)
 

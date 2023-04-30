@@ -1,5 +1,5 @@
 import re
-from visualization.latex_parse import extract_two_operands
+from third_party.INT.visualization.latex_parse import extract_two_operands
 
 
 def rm_function_and_brackets(whole_string, function_name):

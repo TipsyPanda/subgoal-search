@@ -20,7 +20,7 @@ from supervised.rubik.rubik_solver_utils import make_RubikEnv, cube_to_string, \
     generate_problems_rubik
 from utils import hf
 from utils import hf_generate
-# from visualization.seq_parse import entity_to_seq_string, logic_statement_to_seq_string
+# from third_party.INT.visualization.seq_parse import entity_to_seq_string, logic_statement_to_seq_string
 
 
 class ConditionalPolicyRubik:

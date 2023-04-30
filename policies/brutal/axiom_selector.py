@@ -8,7 +8,7 @@ from proof_system.meta_axiom import MetaAxiom
 from proof_system.numerical_functions import necessary_numerical_functions
 from proof_system.utils import is_entity, is_structured, substitution, search_operator_operands_in_gt, \
     side_of_an_entity, is_ls_type
-from visualization.seq_parse import logic_statement_to_seq_string, entity_to_seq_string
+from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string, entity_to_seq_string
 
 
 def search_for_subgoal_bfs(state, subgoal_str, ground_truth, max_dist=2, debugg=False):

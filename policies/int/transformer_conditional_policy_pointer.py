@@ -14,7 +14,7 @@ from supervised.int.representation.action_representation_pointer import generate
 from supervised.int import utils as int_utils
 from utils import hf
 from utils import hf_generate
-from visualization.seq_parse import logic_statement_to_seq_string
+from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string
 
 
 class SubgoalPursuitData:

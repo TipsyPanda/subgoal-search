@@ -3,7 +3,7 @@ from policies.lstm.lstm_policy_architecture import get_encoder_decoder_models, g
     state_destination_formula_to_encoder_input, sample_output_sequence
 from supervised.int import ActionRepresentationMask
 from supervised.int.representation.action_representation_mask import generate_masks_for_logic_statement
-from visualization.seq_parse import logic_statement_to_seq_string
+from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string
 
 
 class ConditionalLowLevelPolicyLSTM:

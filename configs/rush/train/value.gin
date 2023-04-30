@@ -1,0 +1,19 @@
+# Rush value function
+
+run.job_class = @jobs.TrainHfForRushValue
+
+TrainHfForRushValue.n_iterations = 6000
+TrainHfForRushValue.epochs_per_iteration = 1
+TrainHfForRushGoal.eval_every_n_iterations = 20
+TrainHfForRushGoal.generate_every_n_iterations = 20
+TrainHfForRushValue.fresh_dataset_per_iteration = True
+
+TrainHfForRushValue.batch_size = 32
+TrainHfForRushValue.learning_rate = 3e-4
+TrainHfForRushValue.lr_schedule = @InverseSqrtWithWarmup
+InverseSqrtWithWarmup.warmup_steps = 4000
+
+TrainHfForRushValue.init_hf_seed = 5758
+TrainHfForRushValue.duplicate_hf_logs = True
+
+gen_Rush_data.n_random_moves.value = 20
