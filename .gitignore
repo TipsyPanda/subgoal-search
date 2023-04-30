@@ -7,4 +7,8 @@ resume_old/*
 !resume_old/.gitkeep
 subgoal-search-resources/*
 out/
+out/subgoal_generator/transformer/
+out/subgoal_generator/transformer/checkpoint-250/optimizer.pt
+out/subgoal_generator/transformer/checkpoint-250/pytorch_model.bin
+
 
