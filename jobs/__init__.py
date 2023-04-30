@@ -51,6 +51,8 @@ JobCreateSamplesSokoban = configure_job(job_create_samples_sokoban.JobCreateSamp
 JobDrawGoalBuildingSokoban = configure_job(job_draw_goal_building_sokoban.JobDrawGoalBuildingSokoban)
 JobSolveSokoban = configure_job(job_solve_sokoban.JobSolveSokoban)
 JobSokobanTrainPolicyBaseline = configure_job(job_sokoban_train_policy_baseline.JobSokobanTrainPolicyBaseline)
+JobSolveSokoban = configure_job(job_solve_sokoban.JobSolveSokoban)
+JobSokobanTrainPolicyBaseline = configure_job(job_sokoban_train_policy_baseline.JobSokobanTrainPolicyBaseline)
 
 JobIntTrainGoalLSTM = configure_job(job_int_train_goal_lstm.JobIntTrainGoalLSTM)
 JobIntSampleFromLSTM = configure_job(job_int_sample_from_lstm.JobIntSampleFromLSTM)
