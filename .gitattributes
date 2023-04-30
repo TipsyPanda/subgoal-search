@@ -1,0 +1,2 @@
+out/subgoal_generator/transformer/checkpoint-250/optimizer.pt filter=lfs diff=lfs merge=lfs -text
+out/subgoal_generator/transformer/checkpoint-250/pytorch_model.bin filter=lfs diff=lfs merge=lfs -text

@@ -9,6 +9,7 @@ from envs import Sokoban
 
 from joblib import Parallel, delayed
 from jobs.core import Job
+from supervised.rush import rush_solver_utils
 from metric_logging import log_scalar, log_scalar_metrics, MetricsAccumulator, log_text
 
 # from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string, entity_to_seq_string
@@ -61,26 +62,23 @@ class JobSolveRush(Job):
             self.collection = {}
 
     def execute(self):
-        proofs_to_solve = generate_problems_rush(100)
-        problems_to_solve = [proof[0] for proof in proofs_to_solve]
-        log_text('Problem generated:', proofs_to_solve)
+        #proofs_to_solve = generate_problems_rush(100)
+        problems_to_solve = generate_problems_rush(100) # [proof[0] for proof in proofs_to_solve]
         solver = self.solver_class()
         solver.construct_networks()
         jobs_done = 0
         jobs_to_do = self.n_jobs
         batch_num = 0
         all_batches = self.n_jobs // self.batch_size
-
         total_time_start = time.time()
         while jobs_to_do > 0:
             jobs_in_batch = min(jobs_to_do, self.batch_size)
-            problems_to_solve_in_batch = problems_to_solve[jobs_done:jobs_done+jobs_in_batch]
+            problems_to_solve_in_batch = problems_to_solve
             print('============================ Batch {:>4}  out  of  {:>4} ============================'.
                   format(batch_num+1, all_batches))
             # results = Parallel(n_jobs=self.n_parallel_workers, verbose=100)(
             #     delayed(solve_problem)(solver, input_problem) for input_problem in problems_to_solve_in_batch
             # )
-            log_text('Start solver with problem:', problems_to_solve_in_batch )
             results = [
                 solve_problem(solver, input_problem) for input_problem in problems_to_solve_in_batch
             ]

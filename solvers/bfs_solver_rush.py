@@ -4,6 +4,7 @@ import logging
 
 import random
 import numpy as np
+from supervised.rush import rush_solver_utils
 from metric_logging import log_text
 
 # from envs import Sokoban
@@ -21,6 +22,7 @@ N = 6
 EMPTY_SPACE = '.'
 ICE_CREAM_TRUCK = 'A'
 START_ROW = 2
+PLIES = {}
 
 class SolverNode:
     def __init__(self, state, parent, depth, child_num, path, done):
@@ -66,16 +68,18 @@ class BestFSSolverRush(GeneralSolver):
         self.goal_builder.construct_networks()
 
     def solve(self, input):
+        PLIES = {}
+        board_strings = input['board_string'] 
+        additional_info= board_strings
+        board_strings = rush_solver_utils.update_board_representation(board_strings)
         tree_metrics = {}
         root = []
-        additional_info= "Rush Test info"
         inter_goals = {}
         trajectory_actions = {}
-        log_text('Solver run started', tree_metrics )
-        board = get_board2()
-        print(board)
+        log_text('Solver run started', additional_info )
+        board = convert_to_6x6_char_list(board_strings[0])
         path = search(board)
-        print('Solved length: {}'.format(len(path)))
+        print('Solved length: {} (Fastest Solve possible: {})'.format(len(path), input['opt_solve']))
         print(PLIES)
         #print('\n\n'.join(board_str(_) for _ in path))
         solved = True
@@ -141,7 +145,7 @@ def is_solved(board):
 
   return True
 
-
+#to be extended with subgoal logic
 def get_next_states(board):
   processed_chars_set = set([EMPTY_SPACE])
   next_states = []
@@ -184,7 +188,7 @@ def get_next_states(board):
   return next_states
 
 
-PLIES = {}
+
 def search(board):
   queue = [(0, [board])]
   board_hash_set = set()
@@ -221,4 +225,12 @@ def get_board2():
     print(board)
     return board
 
+
+def convert_to_6x6_char_list(board_strings):
+    board = []
+
+    for row in board_strings:
+        board.append(list(row))
+
+    return board
 
