@@ -6,5 +6,5 @@ resume_old
 resume_old/*
 !resume_old/.gitkeep
 subgoal-search-resources/*
-out/*
+out/
 
