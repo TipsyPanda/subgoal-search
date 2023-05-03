@@ -11,6 +11,7 @@ from goal_builders.int import mcts_vanilla_goal_builder_int, mcts_goal_builder_i
 from goal_builders.shooting import goal_builder_int as shooting_goal_builder_int
 
 from goal_builders import goal_builder_rubik, goal_generator_rubik
+from goal_builders import goal_builder_rush, goal_generator_rush
 from goal_builders.shooting import goal_builder_shooting_rubik
 
 
@@ -44,5 +45,8 @@ GoalBuilderForShootingINT = configure_goal_builder(
 GoalBuilderRubik = configure_goal_builder(goal_builder_rubik.GoalBuilderRubik)
 GoalGeneratorRubik = configure_goal_builder(goal_generator_rubik.GoalGeneratorRubik)
 SamplingGoalGeneratorRubik = configure_goal_builder(goal_generator_rubik.SamplingGoalGeneratorRubik)
-
 GoalBuilderForShootingRubik = configure_goal_builder(goal_builder_shooting_rubik.GoalBuilderForShootingRubik)
+
+GoalBuilderRush = configure_goal_builder(goal_builder_rush.GoalBuilderRush)
+GoalGeneratorRush = configure_goal_builder(goal_generator_rush.GoalGeneratorRush)
+SamplingGoalGeneratorRush = configure_goal_builder(goal_generator_rush.SamplingGoalGeneratorRush)

@@ -32,7 +32,6 @@ def solve_problem(solver, input_state):
 
 
 class JobSolveRushBfs(Job):
-    log_text('You made it:', str("hello world"))
     def __init__(self,
                  solver_class,
                  n_jobs,

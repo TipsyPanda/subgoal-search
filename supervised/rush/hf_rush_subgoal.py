@@ -1,4 +1,4 @@
-from supervised.rubik import gen_rubik_data
+from supervised.rush import gen_rush_data
 
 import transformers
 from typing import Dict, List, Optional, Tuple
@@ -37,7 +37,7 @@ assert len(TOKEN_TO_STR) == 10
 SEQUENCE_LENGTH = 56
 
 
-class RubikGoalTokenizer(transformers.PreTrainedTokenizer):
+class RushGoalTokenizer(transformers.PreTrainedTokenizer):
     model_input_names = ['input_ids', 'attention_mask']
 
     @property
@@ -68,4 +68,4 @@ class RubikGoalTokenizer(transformers.PreTrainedTokenizer):
         return ''.join(tokens)
 
     def check_validity(self, data):
-        return gen_rubik_data.check_valid(data)
+        return gen_rush_data.check_valid(data)

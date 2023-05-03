@@ -1,5 +1,6 @@
 import pickle
 import time
+import logging
 from copy import deepcopy
 
 import cloudpickle
@@ -8,10 +9,11 @@ from envs import Sokoban
 
 from joblib import Parallel, delayed
 from jobs.core import Job
+from supervised.rush import rush_solver_utils
 from metric_logging import log_scalar, log_scalar_metrics, MetricsAccumulator, log_text
 
 # from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string, entity_to_seq_string
-from supervised.rubik.rubik_solver_utils import generate_problems_rubik, cube_to_string
+from supervised.rush.rush_solver_utils import generate_problems_rush
 
 
 def solve_problem(solver, input_state):
@@ -29,7 +31,7 @@ def solve_problem(solver, input_state):
     )
 
 
-class JobSolveRubik(Job):
+class JobSolveRushSub(Job):
     def __init__(self,
                  solver_class,
                  n_jobs,
@@ -59,20 +61,18 @@ class JobSolveRubik(Job):
             self.collection = {}
 
     def execute(self):
-        proofs_to_solve = generate_problems_rubik(self.n_jobs)
-        problems_to_solve = [proof[0] for proof in proofs_to_solve]
-
+        #proofs_to_solve = generate_problems_rush(100)
+        problems_to_solve = generate_problems_rush(100) # [proof[0] for proof in proofs_to_solve]
         solver = self.solver_class()
         solver.construct_networks()
         jobs_done = 0
         jobs_to_do = self.n_jobs
         batch_num = 0
         all_batches = self.n_jobs // self.batch_size
-
         total_time_start = time.time()
         while jobs_to_do > 0:
             jobs_in_batch = min(jobs_to_do, self.batch_size)
-            problems_to_solve_in_batch = problems_to_solve[jobs_done:jobs_done+jobs_in_batch]
+            problems_to_solve_in_batch = problems_to_solve
             print('============================ Batch {:>4}  out  of  {:>4} ============================'.
                   format(batch_num+1, all_batches))
             # results = Parallel(n_jobs=self.n_parallel_workers, verbose=100)(
@@ -94,45 +94,46 @@ class JobSolveRubik(Job):
     def log_results(self, results, step):
 
         n_logs = len(results)
-        for log_num, result in enumerate(results):
-            log_scalar_metrics('tree', step+log_num, result['tree_metrics'])
-            if self.logged_solutions < self.log_solutions_limit:
-                self.log_solution(result['solution'], result['trajectory_actions'], result['input_problem'], step+log_num)
-            solved = result['solution'] is not None
-            self.experiment_stats.log_metric_to_accumulate('tested', 1)
-            log_scalar_metrics('problems', step+log_num, self.experiment_stats.return_scalars())
-            if solved:
-                self.solved_stats.log_metric_to_average('rate', 1)
-                self.solved_stats.log_metric_to_accumulate('problems', 1)
-                log_scalar('solution', step + log_num, 1)
-                log_scalar('solution/length', step + log_num, len(result['trajectory_actions']))
-                # assert False
-                trajectory_actions = [str(action) for action in result['trajectory_actions']]
-                trajectory = ', '.join(trajectory_actions)
-                log_text('trajectory_actions', f'{step + log_num}: {trajectory}', False)
-                log_scalar('solution/n_subgoals', step + log_num, len(result['solution']))
-            else:
-                self.solved_stats.log_metric_to_average('rate', 0)
-                self.solved_stats.log_metric_to_accumulate('problems', 0)
-                log_scalar('solution', step+log_num, 0)
-                log_scalar('solution/length', step + log_num, -1)
-                log_text('trajectory_actions', f'{step + log_num}: unsolved', False)
-                log_scalar('solution/n_subgoals', step + log_num, -1)
+        log_text('Huere guet do werd gloggt', "content")
+        # for log_num, result in enumerate(results):
+        #     log_scalar_metrics('tree', step+log_num, result['tree_metrics'])
+        #     if self.logged_solutions < self.log_solutions_limit:
+        #         self.log_solution(result['solution'], result['trajectory_actions'], result['input_problem'], step+log_num)
+        #     solved = result['solution'] is not None
+        #     self.experiment_stats.log_metric_to_accumulate('tested', 1)
+        #     log_scalar_metrics('problems', step+log_num, self.experiment_stats.return_scalars())
+        #     if solved:
+        #         self.solved_stats.log_metric_to_average('rate', 1)
+        #         self.solved_stats.log_metric_to_accumulate('problems', 1)
+        #         log_scalar('solution', step + log_num, 1)
+        #         log_scalar('solution/length', step + log_num, len(result['trajectory_actions']))
+        #         # assert False
+        #         trajectory_actions = [str(action) for action in result['trajectory_actions']]
+        #         trajectory = ', '.join(trajectory_actions)
+        #         log_text('trajectory_actions', f'{step + log_num}: {trajectory}', False)
+        #         log_scalar('solution/n_subgoals', step + log_num, len(result['solution']))
+        #     else:
+        #         self.solved_stats.log_metric_to_average('rate', 0)
+        #         self.solved_stats.log_metric_to_accumulate('problems', 0)
+        #         log_scalar('solution', step+log_num, 0)
+        #         log_scalar('solution/length', step + log_num, -1)
+        #         log_text('trajectory_actions', f'{step + log_num}: unsolved', False)
+        #         log_scalar('solution/n_subgoals', step + log_num, -1)
 
 
-            if self.budget_checkpoints is not None:
-                for budget in self.budget_checkpoints:
-                    if result['tree_metrics']['expanded_nodes'] <= budget and solved:
-                        self.solved_stats.log_metric_to_average(f'rate/{budget}_exp_nodes', 1)
-                    else:
-                        self.solved_stats.log_metric_to_average(f'rate/{budget}_exp_nodes', 0)
+        #     if self.budget_checkpoints is not None:
+        #         for budget in self.budget_checkpoints:
+        #             if result['tree_metrics']['expanded_nodes'] <= budget and solved:
+        #                 self.solved_stats.log_metric_to_average(f'rate/{budget}_exp_nodes', 1)
+        #             else:
+        #                 self.solved_stats.log_metric_to_average(f'rate/{budget}_exp_nodes', 0)
 
-                    if result['tree_metrics']['nodes'] <= budget and solved:
-                        self.solved_stats.log_metric_to_average(f'rate/{budget}_nodes', 1)
-                    else:
-                        self.solved_stats.log_metric_to_average(f'rate/{budget}_nodes', 0)
+        #             if result['tree_metrics']['nodes'] <= budget and solved:
+        #                 self.solved_stats.log_metric_to_average(f'rate/{budget}_nodes', 1)
+        #             else:
+        #                 self.solved_stats.log_metric_to_average(f'rate/{budget}_nodes', 0)
 
-        log_scalar_metrics('solved', step+n_logs, self.solved_stats.return_scalars())
+        # log_scalar_metrics('solved', step+n_logs, self.solved_stats.return_scalars())
 
 
     def log_solution(self, solution, trajectory_actions, input_problem, step):

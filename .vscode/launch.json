@@ -25,10 +25,29 @@
             "python": "/opt/conda/bin/python",
             "program": "/home/yannick_schmid/subgoal-search/runner.py",
             "args": [
-                "--config_file=configs/rush/solve/baseline.gin",
+                "--config_file=configs/rush/solve/ksubs.gin" ,
+                "--config=GoalGeneratorRush.generator_checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_generator_k_4\"",
+                "--config=ConditionalPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resourcesRCES}/rush/rush_conditional_policy_k_4\"",
                 "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
-                "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
-                "--config=JobSolveRush.n_jobs=1"
+                "--config=JobSolveRushSub.n_jobs=5"
+            ],
+            "env": {
+                "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
+            },
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Rubik",
+            "type": "python",
+            "request": "launch",
+            "python": "/opt/conda/bin/python",
+            "program": "/home/yannick_schmid/subgoal-search/runner.py",
+            "args": [
+                "--config_file=configs/rubik/solve/ksubs.gin" ,
+                "--config=GoalGeneratorRubik.generator_checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rubik/rubik_generator_k_4\"",
+                "--config=ConditionalPolicyRubik.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resourcesRCES}/rubik/rubik_conditional_policy_k_4\"",
+                "--config=ValueEstimatorRubik.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rubik/rubik_value\"",
+                "--config=JobSolveRubik.n_jobs=5"
             ],
             "env": {
                 "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
