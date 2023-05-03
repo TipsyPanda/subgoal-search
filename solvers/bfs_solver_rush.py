@@ -47,7 +47,7 @@ class GeneralSolver(Solver):
         self.core_env = make_RubikEnv()
 
 
-class BestFSSolverRush(GeneralSolver):
+class BfsSolverRush(GeneralSolver):
     def __init__(self,
                  goal_builder_class=None,
                  value_estimator_class=None,
@@ -79,10 +79,9 @@ class BestFSSolverRush(GeneralSolver):
         log_text('Solver run started', additional_info )
         board = convert_to_6x6_char_list(board_strings[0])
         path = search(board)
-        print('Solved length: {} (Fastest Solve possible: {})'.format(len(path), input['opt_solve']))
-        print(PLIES)
+        print('Solved length: {} (Optimal path length: {})'.format(len(path), input['opt_solve']))
+        #print(PLIES)
         #print('\n\n'.join(board_str(_) for _ in path))
-        solved = True
         return (inter_goals, tree_metrics, root, trajectory_actions, additional_info)
 
 

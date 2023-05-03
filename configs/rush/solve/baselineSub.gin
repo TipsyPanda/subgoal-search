@@ -1,4 +1,4 @@
-# BF-baseline solving Rush's cube; k = 4
+# BF-baseline solving Rush's; k = 4
 
 # You need to specify the following parameters in command line (see README.md):
 # ValueEstimatorRush.checkpoint_path

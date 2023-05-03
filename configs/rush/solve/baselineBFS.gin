@@ -1,0 +1,23 @@
+# BF-baseline solving Rush's; k = 4
+
+# You need to specify the following parameters in command line (see README.md):
+# ValueEstimatorRush.checkpoint_path
+# VanillaPolicyRush.checkpoint_path
+
+run.job_class = @jobs.JobSolveRushBfs
+
+JobSolveRushBfs.n_jobs = 1000
+JobSolveRushBfs.n_parallel_workers = 3
+JobSolveRushBfs.batch_size = 5
+JobSolveRushBfs.solver_class = @solvers.BfsSolverRush
+JobSolveRushBfs.budget_checkpoints = [50, 100, 200, 400, 500, 1000, 2000, 4000, 5000, 20000]
+JobSolveRushBfs.log_solutions_limit = 100
+
+BfsSolverRush.max_tree_depth = 90
+BfsSolverRush.max_tree_size = 6000
+BfsSolverRush.value_estimator_class = @value_estimators.ValueEstimatorRush
+BfsSolverRush.goal_builder_class = @policies.VanillaPolicyRush
+
+VanillaPolicyRush.n_actions = 4
+VanillaPolicyRush.num_beams = 32
+VanillaPolicyRush.temperature = 1.

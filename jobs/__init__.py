@@ -30,7 +30,7 @@ from jobs.rush import job_rush_train_goal_hf
 from jobs.rush import job_rush_train_value_hf
 from jobs.rush import job_rush_train_policy_hf
 from jobs.rush import job_rush_validate_policy_hf
-from jobs.rush import job_solve_rush
+from jobs.rush import job_solve_rush_bfs
 from jobs.rush import job_rush_shooting_hf
 
 from jobs.sokoban import (
@@ -67,7 +67,7 @@ TrainHfForRushGoal = configure_job(job_rush_train_goal_hf.TrainHfForRushGoal)
 TrainHfForRushValue = configure_job(job_rush_train_value_hf.TrainHfForRushValue)
 TrainHfForRushPolicy = configure_job(job_rush_train_policy_hf.TrainHfForRushPolicy)
 TrainHfForRushValidatePolicy = configure_job(job_rush_validate_policy_hf.TrainHfForRushValidatePolicy)
-JobSolveRush = configure_job(job_solve_rush.JobSolveRush)
+JobSolveRushBfs = configure_job(job_solve_rush_bfs.JobSolveRushBfs)
 JobShootingSolveRush = configure_job(job_rush_shooting_hf.JobShootingSolveRush)
 
 JobIntGenerateGoalHf = configure_job(job_int_generate_goal_hf.JobIntGenerateGoalHf)
