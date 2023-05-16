@@ -93,4 +93,38 @@ def decode_action(raw_action):
 
     return MOVE_TOKEN_TO_ID[move]
 
-read_file(filename)
+
+
+def rush_hour_heuristic(board_string):
+    N = 6
+    target_car = 'A'
+    exit_column = 5
+
+    # Convert the board_string to a 6x6 board
+    board = []
+    for i in range(0, len(board_string), N):
+        row = board_string[i:i + N]
+        board.append(list(row))
+
+    # The target car is always in row index 2 and has a horizontal orientation
+    target_car_row = 2
+    target_car_col = board[target_car_row].index(target_car)
+
+    # Function to find the blocking cars
+    def count_blocking_cars(car_row, car_col):
+        count = 0
+
+        for c in range(car_col + 1, N):
+            if board[car_row][c] != '.':
+                count += 1
+
+        return count
+
+    # Count the cars blocking the target car
+    blocking_cars_count = count_blocking_cars(target_car_row, target_car_col + 1)
+
+    return blocking_cars_count
+
+# Test with a sample board_string
+board_string = 'GBB.L.GHI.LMGHIAAMCCCK.M..JKDDEEJFF.'
+print(rush_hour_heuristic(board_string))

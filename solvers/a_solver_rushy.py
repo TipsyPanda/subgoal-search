@@ -48,7 +48,7 @@ class GeneralSolver(Solver):
         self.core_env = make_RubikEnv()
 
 
-class BfsSolverRush(GeneralSolver):
+class ASolverRush(GeneralSolver):
     def __init__(self,
                  goal_builder_class=None,
                  value_estimator_class=None,
@@ -89,7 +89,7 @@ class BfsSolverRush(GeneralSolver):
 
 
 
-def _board():
+def get_board():
   # Uppercase is horizontal, lowercase is vertical.
   board = [[EMPTY_SPACE] * 6 for _ in range(N)]
   # Initialize the ice cream truck in a random column.
