@@ -31,6 +31,7 @@ from jobs.rush import job_rush_train_value_hf
 from jobs.rush import job_rush_train_policy_hf
 from jobs.rush import job_rush_validate_policy_hf
 from jobs.rush import job_solve_rush_bfs
+from jobs.rush import job_solve_rush_a_star
 from jobs.rush import job_solve_rush_sub
 from jobs.rush import job_rush_shooting_hf
 
@@ -69,6 +70,7 @@ TrainHfForRushValue = configure_job(job_rush_train_value_hf.TrainHfForRushValue)
 TrainHfForRushPolicy = configure_job(job_rush_train_policy_hf.TrainHfForRushPolicy)
 TrainHfForRushValidatePolicy = configure_job(job_rush_validate_policy_hf.TrainHfForRushValidatePolicy)
 JobSolveRushBfs = configure_job(job_solve_rush_bfs.JobSolveRushBfs)
+JobSolveRushAStar = configure_job(job_solve_rush_a_star.JobSolveRushAStar)
 JobSolveRushSub = configure_job(job_solve_rush_sub.JobSolveRushSub)
 JobShootingSolveRush = configure_job(job_rush_shooting_hf.JobShootingSolveRush)
 

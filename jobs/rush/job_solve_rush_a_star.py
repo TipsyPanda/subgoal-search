@@ -2,7 +2,7 @@ import pickle
 import time
 import logging
 from copy import deepcopy
-import csv
+
 import cloudpickle
 
 from envs import Sokoban
@@ -31,7 +31,7 @@ def solve_problem(solver, input_state):
     )
 
 
-class JobSolveRushBfs(Job):
+class JobSolveRushAStar(Job):
     def __init__(self,
                  solver_class,
                  n_jobs,
@@ -86,8 +86,7 @@ class JobSolveRushBfs(Job):
             jobs_done += jobs_in_batch
             jobs_to_do -= jobs_in_batch
             batch_num += 1
-            log_tree_metrics_to_csv(results['1'])
-            log_tree_metrics(results['1'])
+
         for metric, value in self.solved_stats.return_scalars().items():
             log_text('summary', f'{metric},  {value}')
         log_text('summary', f'Finished time , {time.time() - total_time_start}')
@@ -135,28 +134,6 @@ class JobSolveRushBfs(Job):
         #                 self.solved_stats.log_metric_to_average(f'rate/{budget}_nodes', 0)
 
         # log_scalar_metrics('solved', step+n_logs, self.solved_stats.return_scalars())
-
-    def log_tree_metrics(tree_metrics):
-        logger = logging.getLogger(__name__)
-        logger.info('Tree metrics:')
-        logger.info('Nodes: %s', tree_metrics['nodes'])
-        logger.info('Expanded nodes: %s', tree_metrics['expanded_nodes'])
-        logger.info('Unexpanded nodes: %s', tree_metrics['unexpanded_nodes'])
-        logger.info('Solution length: %s', tree_metrics['solve_length'])
-        logger.info('Optimal solution: %s', tree_metrics['opt_solve'])
-
-
-
-    def log_tree_metrics_to_csv(tree_metrics, filename):
-        with open(filename, 'a', newline='') as csvfile:
-            fieldnames = tree_metrics.keys()
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-            # Only write the header if the file is empty
-            if csvfile.tell() == 0:
-                writer.writeheader()
-
-            writer.writerow(tree_metrics)
 
 
     def log_solution(self, solution, trajectory_actions, input_problem, step):

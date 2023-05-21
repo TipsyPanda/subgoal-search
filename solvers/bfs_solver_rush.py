@@ -7,18 +7,13 @@ import numpy as np
 from supervised.rush import rush_solver_utils
 from metric_logging import log_text
 
-# from envs import Sokoban
-# from envs.int.theorem_prover_env import TheoremProverEnv
-# from goal_builders.int.goal_builder_int import GoalBuilderINT
+
 from solvers.core import Solver
 from supervised.rubik.rubik_solver_utils import cube_to_string, make_RubikEnv
-from supervised.rush.heuristic_block import BlockingHeuristics
 from policies import ConditionalPolicyRubik, VanillaPolicyRubik
 
 
-# from utils.utils_sokoban import get_field_index_from_name, HashableNumpyArray
-# from value_estimators.int.value_estimator_int import TrivialValueEstimatorINT
-# from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string
+
 N = 6
 EMPTY_SPACE = '.'
 ICE_CREAM_TRUCK = 'A'
@@ -77,16 +72,21 @@ class BfsSolverRush(GeneralSolver):
         root = []
         inter_goals = {}
         trajectory_actions = {}
-        log_text('Solver run started', additional_info )
+        log_text('BFS Solver run started', additional_info )
         board = convert_to_6x6_char_list(board_strings[0])
         path = search(board)
-        print('Solved length: {} (Optimal path length: {})'.format(len(path), input['opt_solve']))
+        root= "BFS"
+        print('Solved length: {} (Optimal path length: {}), Number of nodes: {}'.format(len(path[0]), input['opt_solve'],path[1]))
+        tree_metrics = {
+           'nodes' : path[1],
+          'expanded_nodes': 0,
+          'unexpanded_nodes': 0,
+          'solve_length': len(path[0]),
+          'opt_solve' : input['opt_solve'],
+          }
         #print(PLIES)
         #print('\n\n'.join(board_str(_) for _ in path))
         return (inter_goals, tree_metrics, root, trajectory_actions, additional_info)
-
-
-
 
 
 def _board():
@@ -201,14 +201,14 @@ def search(board):
       PLIES[ply] += 1
 
     if is_solved(path[-1]):
-      return path
+      return path,len(board_hash_set)
 
     for next_state in get_next_states(path[-1]):
       if board_str(next_state) not in board_hash_set:
         board_hash_set.add(board_str(next_state))
         queue.append((ply + 1, path + [next_state]))
 
-  return []
+  return [],len(board_hash_set)
 
 def get_board2():
 
