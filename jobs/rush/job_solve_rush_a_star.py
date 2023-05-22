@@ -11,6 +11,7 @@ from joblib import Parallel, delayed
 from jobs.core import Job
 from supervised.rush import rush_solver_utils
 from metric_logging import log_scalar, log_scalar_metrics, MetricsAccumulator, log_text
+from utils.logger import log_tree_metrics_to_csv
 
 # from third_party.INT.visualization.seq_parse import logic_statement_to_seq_string, entity_to_seq_string
 from supervised.rush.rush_solver_utils import generate_problems_rush
@@ -62,7 +63,7 @@ class JobSolveRushAStar(Job):
 
     def execute(self):
         #proofs_to_solve = generate_problems_rush(100)
-        problems_to_solve = generate_problems_rush(100) # [proof[0] for proof in proofs_to_solve]
+        problems_to_solve = generate_problems_rush(10) # [proof[0] for proof in proofs_to_solve]
         solver = self.solver_class()
         solver.construct_networks()
         jobs_done = 0
@@ -86,6 +87,7 @@ class JobSolveRushAStar(Job):
             jobs_done += jobs_in_batch
             jobs_to_do -= jobs_in_batch
             batch_num += 1
+            log_tree_metrics_to_csv(results, 'metrics_a_star.csv')
 
         for metric, value in self.solved_stats.return_scalars().items():
             log_text('summary', f'{metric},  {value}')

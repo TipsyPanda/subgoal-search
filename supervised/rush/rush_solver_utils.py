@@ -12,14 +12,17 @@ def make_RushEnv():
 
 
 def generate_problems_rush(n_problems):
-    problems = []
-    rushStartStates = read_file(filename)
+    rushStartStates = read_file(filename,n_problems)
     return rushStartStates
 
-def read_file(filename):
+def read_file(filename, max_problems):
     data = []
     with open(filename, 'r') as file:
-        for line in file:
+        for line_num, line in enumerate(file):
+            # Stop reading once we have enough problems
+            if line_num >= max_problems:
+                break
+            
             split_line = line.strip().split(' ')
             opt_solve = int(split_line[0])
             board_string = split_line[1]

@@ -76,7 +76,9 @@ class AStarSolverRush(GeneralSolver):
         board = convert_to_6x6_char_list(board_strings[0])
         path = a_star_solver(board)
         print('Solved length: {} (Optimal path length: {}), Number of nodes: {}'.format(path[2], input['opt_solve'], path[1]))
-        tree_metrics = {'nodes' : path[1],
+        tree_metrics = { 
+                'method' :"A*",            
+                'nodes' : path[1],
                 'expanded_nodes': 0,
                 'unexpanded_nodes': 0,
                 'solve_length': path[2],

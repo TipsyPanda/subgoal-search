@@ -78,7 +78,8 @@ class BfsSolverRush(GeneralSolver):
         root= "BFS"
         print('Solved length: {} (Optimal path length: {}), Number of nodes: {}'.format(len(path[0]), input['opt_solve'],path[1]))
         tree_metrics = {
-           'nodes' : path[1],
+          'method' :"BFS",
+          'nodes' : path[1],
           'expanded_nodes': 0,
           'unexpanded_nodes': 0,
           'solve_length': len(path[0]),
