@@ -1,7 +1,7 @@
 from supervised.rush import gen_rush_data
 from supervised.rush.gen_rush_data import make_env_Rush
 
-filename = '/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush.txt'
+filename = '/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_all.txt'
 
 def cube_to_string(cube):
     return gen_rush_data.BOS_LEXEME + gen_rush_data.cube_bin_to_str(cube) + gen_rush_data.EOS_LEXEME
@@ -11,16 +11,16 @@ def make_RushEnv():
     return make_env_Rush(step_limit=1e10, shuffles=100, obs_type='basic')
 
 
-def generate_problems_rush(n_problems):
-    rushStartStates = read_file(filename,n_problems)
+def generate_problems_rush(n_problems=None):
+    rushStartStates = read_file(filename, n_problems)
     return rushStartStates
 
-def read_file(filename, max_problems):
+def read_file(filename, max_problems=None):
     data = []
     with open(filename, 'r') as file:
         for line_num, line in enumerate(file):
             # Stop reading once we have enough problems
-            if line_num >= max_problems:
+            if max_problems is not None and line_num >= max_problems:
                 break
             
             split_line = line.strip().split(' ')
@@ -35,6 +35,7 @@ def read_file(filename, max_problems):
             })
 
     return data
+
 
 def update_board_representation(board_strings):
     N = 6

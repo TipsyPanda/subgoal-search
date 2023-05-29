@@ -9,6 +9,7 @@ from envs import Sokoban
 
 from joblib import Parallel, delayed
 from jobs.core import Job
+from tqdm import tqdm
 from supervised.rush import rush_solver_utils
 from metric_logging import log_scalar, log_scalar_metrics, MetricsAccumulator, log_text
 from utils.logger import log_tree_metrics_to_csv
@@ -62,40 +63,49 @@ class JobSolveRushBfs(Job):
             self.collection = {}
 
     def execute(self):
-        problems_to_solve = generate_problems_rush(3) 
+        problems_to_solve = generate_problems_rush(3)
         solver = self.solver_class()
         solver.construct_networks()
         jobs_done = 0
-        jobs_to_do = self.n_jobs
         batch_num = 0
-        all_batches = self.n_jobs // self.batch_size
+        all_batches = len(problems_to_solve) // self.batch_size
+        jobs_to_do = all_batches + 1 if len(problems_to_solve) % self.batch_size != 0 else all_batches
         total_time_start = time.time()
-        while jobs_to_do > 0:
-            jobs_in_batch = min(jobs_to_do, self.batch_size)
-            problems_to_solve_in_batch = problems_to_solve
+        while jobs_done < len(problems_to_solve):
+            # Calculate start and end indices for the batch
+            start_index = batch_num * self.batch_size
+            end_index = min((batch_num + 1) * self.batch_size, len(problems_to_solve))
+            
+            # Take the batch of problems
+            problems_to_solve_in_batch = problems_to_solve[start_index:end_index]
+
             print('============================ Batch {:>4}  out  of  {:>4} ============================'.
-                  format(batch_num+1, all_batches))
+                format(batch_num+1, all_batches))
+            
             # results = Parallel(n_jobs=self.n_parallel_workers, verbose=100)(
             #     delayed(solve_problem)(solver, input_problem) for input_problem in problems_to_solve_in_batch
             # )
+            
             results = [
-                solve_problem(solver, input_problem) for input_problem in problems_to_solve_in_batch
+                        solve_problem(solver, input_problem) for input_problem in tqdm(problems_to_solve_in_batch)
             ]
+            
             print('===================================================================================')
             self.log_results(results, jobs_done)
-            jobs_done += jobs_in_batch
-            jobs_to_do -= jobs_in_batch
+            
+            jobs_done += len(problems_to_solve_in_batch)
             batch_num += 1
-            log_tree_metrics_to_csv(results, 'metrics.csv')
+
+            log_tree_metrics_to_csv(results, 'metrics.csv', overwrite=False)
 
         for metric, value in self.solved_stats.return_scalars().items():
             log_text('summary', f'{metric},  {value}')
         log_text('summary', f'Finished time , {time.time() - total_time_start}')
 
+
     def log_results(self, results, step):
 
         n_logs = len(results)
-        log_text('Huere guet do werd gloggt', "content")
 
 
     def log_solution(self, solution, trajectory_actions, input_problem, step):

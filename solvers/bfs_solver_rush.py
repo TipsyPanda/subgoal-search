@@ -3,6 +3,7 @@ import random
 import logging
 
 import random
+import time
 import numpy as np
 from supervised.rush import rush_solver_utils
 from metric_logging import log_text
@@ -72,57 +73,24 @@ class BfsSolverRush(GeneralSolver):
         root = []
         inter_goals = {}
         trajectory_actions = {}
-        log_text('BFS Solver run started', additional_info )
+        # log_text('BFS Solver run started', additional_info )
         board = convert_to_6x6_char_list(board_strings[0])
-        path = search(board)
+        solve_time_start = time.time()
+        path = bfs_solve(board)
+        solve_time = time.time() - solve_time_start
         root= "BFS"
-        print('Solved length: {} (Optimal path length: {}), Number of nodes: {}'.format(len(path[0]), input['opt_solve'],path[1]))
+        # print('Solved length: {} (Optimal path length: {}), Number of nodes: {} , Time: {}'.format(len(path[0]), input['opt_solve'],path[2],solve_time ))
         tree_metrics = {
           'method' :"BFS",
-          'nodes' : path[1],
-          'expanded_nodes': 0,
-          'unexpanded_nodes': 0,
+          'board' : input['board_string'],
+          'nodes' : path[2],
           'solve_length': len(path[0]),
           'opt_solve' : input['opt_solve'],
+          'solve_time' : solve_time,
+
           }
-        #print(PLIES)
-        #print('\n\n'.join(board_str(_) for _ in path))
+        #print_path(path)
         return (inter_goals, tree_metrics, root, trajectory_actions, additional_info)
-
-
-def _board():
-  # Uppercase is horizontal, lowercase is vertical.
-  board = [[EMPTY_SPACE] * 6 for _ in range(N)]
-  # Initialize the ice cream truck in a random column.
-  start_col = random.randrange(N - 2)
-  board[START_ROW][start_col] = board[START_ROW][start_col + 1] = ICE_CREAM_TRUCK
-
-  # Add more cars.
-  num_attempts = 0
-  for i in range(random.randrange(6, 10)):
-    car_len = random.randrange(2, 4)
-    while True:
-      vertical = random.randrange(2) == 0
-      r = random.randrange(N - (car_len - 1) * int(vertical))
-      c = random.randrange(N - (car_len - 1) * int(not vertical))
-      is_clear = True
-      for j in range(car_len):
-        if board[r + j * int(vertical)][c + j * int(not vertical)] != EMPTY_SPACE:
-          is_clear = False
-          break
-
-      if is_clear:
-        car_char = chr(ord('b' if vertical else 'B') + i)
-        for j in range(car_len):
-          board[r + j * int(vertical)][c + j * int(not vertical)] = car_char
-        break
-
-      num_attempts += 1
-      if num_attempts > 1000:
-        # We have enough cars anyway.
-        break
-
-  return board
 
 
 def board_str(board):
@@ -134,7 +102,7 @@ def copy_board(board):
 
 
 def is_solved(board):
-  # Find any obstacles between the ice cream truck and the right edge.
+  # Find any obstacles between the goal car and the right edge.
   for i in range(N - 1, -1, -1):
     char_i = board[START_ROW][i]
     if char_i == EMPTY_SPACE:
@@ -190,9 +158,10 @@ def get_next_states(board):
 
 
 
-def search(board):
+def bfs_solve(board):
   queue = [(0, [board])]
   board_hash_set = set()
+  nodes_expanded = 0  
 
   while queue:
     ply, path = queue.pop(0)
@@ -200,16 +169,17 @@ def search(board):
       PLIES[ply] = 1
     else:
       PLIES[ply] += 1
-
+        
+    nodes_expanded += 1 
     if is_solved(path[-1]):
-      return path,len(board_hash_set)
+      return path,len(path),nodes_expanded
 
     for next_state in get_next_states(path[-1]):
       if board_str(next_state) not in board_hash_set:
         board_hash_set.add(board_str(next_state))
         queue.append((ply + 1, path + [next_state]))
 
-  return [],len(board_hash_set)
+  return [],len(board_hash_set), nodes_expanded
 
 def get_board2():
 
@@ -234,4 +204,12 @@ def convert_to_6x6_char_list(board_strings):
         board.append(list(row))
 
     return board
+
+def print_path(path):
+    for i, board in enumerate(path[0]):
+        print(f"Step {i}:")
+        for row in board:
+            print(''.join(row))
+        print("\n")
+
 

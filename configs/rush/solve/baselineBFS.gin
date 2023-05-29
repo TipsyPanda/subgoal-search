@@ -6,9 +6,9 @@
 
 run.job_class = @jobs.JobSolveRushBfs
 
-JobSolveRushBfs.n_jobs = 1000
-JobSolveRushBfs.n_parallel_workers = 3
-JobSolveRushBfs.batch_size = 5
+JobSolveRushBfs.n_jobs = 1
+JobSolveRushBfs.n_parallel_workers = 4
+JobSolveRushBfs.batch_size = 100
 JobSolveRushBfs.solver_class = @solvers.BfsSolverRush
 JobSolveRushBfs.budget_checkpoints = [50, 100, 200, 400, 500, 1000, 2000, 4000, 5000, 20000]
 JobSolveRushBfs.log_solutions_limit = 100
