@@ -1,7 +1,7 @@
 from supervised.rush import gen_rush_data
 from supervised.rush.gen_rush_data import make_env_Rush
 
-filename = '/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_all.txt'
+filename = 'supervised/rush/Initial_states/rush_all.txt'
 
 def cube_to_string(cube):
     return gen_rush_data.BOS_LEXEME + gen_rush_data.cube_bin_to_str(cube) + gen_rush_data.EOS_LEXEME

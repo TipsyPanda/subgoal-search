@@ -36,9 +36,10 @@ class ValueEstimatorRush:
         )
 
     def construct_networks(self):
-        self.model = MBartForConditionalGeneration.from_pretrained(
-            self.checkpoint_path
-        ).to(self.device)
+         self.model = None 
+        #  MBartForConditionalGeneration.from_pretrained(
+        #     self.checkpoint_path
+        # ).to(self.device)
 
     def evaluate(self, state):
         return -self.predict_value(state)

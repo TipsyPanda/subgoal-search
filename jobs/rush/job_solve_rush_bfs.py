@@ -67,7 +67,7 @@ class JobSolveRushBfs(Job):
     def execute(self):
         problems_to_solve = generate_problems_rush(self.nr_problems)
         solver = self.solver_class()
-        solver.construct_networks()
+        #solver.construct_networks()
         jobs_done = 0
         batch_num = 0
         all_batches = len(problems_to_solve) // self.batch_size

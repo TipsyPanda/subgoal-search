@@ -9,8 +9,6 @@
             "program": "/home/yannick_schmid/subgoal-search/runner.py",
             "args": [
                 "--config_file=configs/rush/solve/baselineBFS.gin",
-                "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
-                "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
                 "--config=JobSolveRushBfs.n_jobs=1",
                 "--config=JobSolveRushBfs.nr_problems=10000",
             ],
@@ -27,9 +25,6 @@
             "program": "/home/yannick_schmid/subgoal-search/runner.py",
             "args": [
                 "--config_file=configs/rush/solve/baselineAStar.gin",
-                "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
-                "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
-                "--config=JobSolveRushAStar.n_jobs=1",
                 "--config=JobSolveRushAStar.nr_problems=10000",
                 "--config=heuristic = 'advanced'"
             ],
@@ -46,9 +41,6 @@
             "program": "/home/yannick_schmid/subgoal-search/runner.py",
             "args": [
                 "--config_file=configs/rush/solve/baselineAStar.gin",
-                "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
-                "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
-                "--config=JobSolveRushAStar.n_jobs=1",
                 "--config=JobSolveRushAStar.nr_problems=10000",
                 "--config=heuristic = 'simple'"
             ],
