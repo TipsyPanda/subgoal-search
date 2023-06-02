@@ -42,7 +42,9 @@ class JobSolveRushAStar(Job):
                  budget_checkpoints=None,
                  log_solutions_limit=100,
                  job_range = None,
-                 collect_solutions=None
+                 collect_solutions=None,
+                 heuristic = None,
+                 nr_problems=None,
                  ):
 
         self.solver_class = solver_class
@@ -54,6 +56,9 @@ class JobSolveRushAStar(Job):
         self.job_range = job_range
         self.collect_solution = collect_solutions
 
+        self.nr_problems =nr_problems
+        self.heuristic = heuristic
+
         self.solved_stats = MetricsAccumulator()
         self.experiment_stats = MetricsAccumulator()
 
@@ -63,7 +68,7 @@ class JobSolveRushAStar(Job):
             self.collection = {}
 
     def execute(self):
-        problems_to_solve = generate_problems_rush(3)
+        problems_to_solve = generate_problems_rush(self.nr_problems)
         solver = self.solver_class()
         solver.construct_networks()
         jobs_done = 0
@@ -96,7 +101,7 @@ class JobSolveRushAStar(Job):
             jobs_done += len(problems_to_solve_in_batch)
             batch_num += 1
 
-            log_tree_metrics_to_csv(results, 'metrics_a_star_zero.csv', overwrite=False)
+            log_tree_metrics_to_csv(results, 'metrics_a_star_'+self.heuristic+'.csv', overwrite=False)
 
         for metric, value in self.solved_stats.return_scalars().items():
             log_text('summary', f'{metric},  {value}')

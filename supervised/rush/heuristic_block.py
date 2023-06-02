@@ -1,7 +1,9 @@
+import gin
+
 EMPTY_SPACE = '.'
 GOAL_CAR = 'A'
 N = 6
-HEURISTICS = 'ZERO'
+HEURISTICS = 'zero'
 
 
 def num_blocking_cars(board, heuristics=None):
@@ -9,11 +11,11 @@ def num_blocking_cars(board, heuristics=None):
     if heuristics is None:
         heuristics = HEURISTICS
 
-    if heuristics == 'ZERO':
+    if heuristics == 'zero':
         return num_blocking_cars_zero(board)
-    elif heuristics == 'SIMPLE':
+    elif heuristics == 'simple':
         return num_blocking_cars_simple(board)
-    elif heuristics == 'ADVANCED':
+    elif heuristics == 'advanced':
         return num_blocking_cars_advanced(board)
 
 def num_blocking_cars_zero(board):

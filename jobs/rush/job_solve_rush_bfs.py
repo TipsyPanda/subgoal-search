@@ -42,6 +42,7 @@ class JobSolveRushBfs(Job):
                  budget_checkpoints=None,
                  log_solutions_limit=100,
                  job_range = None,
+                 nr_problems = None,
                  collect_solutions=None
                  ):
 
@@ -53,6 +54,7 @@ class JobSolveRushBfs(Job):
         self.log_solutions_limit = log_solutions_limit
         self.job_range = job_range
         self.collect_solution = collect_solutions
+        self.nr_problems = nr_problems
 
         self.solved_stats = MetricsAccumulator()
         self.experiment_stats = MetricsAccumulator()
@@ -63,7 +65,7 @@ class JobSolveRushBfs(Job):
             self.collection = {}
 
     def execute(self):
-        problems_to_solve = generate_problems_rush(3)
+        problems_to_solve = generate_problems_rush(self.nr_problems)
         solver = self.solver_class()
         solver.construct_networks()
         jobs_done = 0

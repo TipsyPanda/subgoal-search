@@ -17,7 +17,7 @@ from policies import ConditionalPolicyRubik, VanillaPolicyRubik
 
 N = 6
 EMPTY_SPACE = '.'
-ICE_CREAM_TRUCK = 'A'
+GOAL_CAR = 'A'
 START_ROW = 2
 PLIES = {}
 
@@ -107,7 +107,7 @@ def is_solved(board):
     char_i = board[START_ROW][i]
     if char_i == EMPTY_SPACE:
       continue
-    elif char_i == ICE_CREAM_TRUCK:
+    elif char_i == GOAL_CAR:
       return True
     else:
       return False

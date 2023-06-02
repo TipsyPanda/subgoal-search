@@ -16,7 +16,6 @@ from supervised.rush.heuristic_block import num_blocking_cars, num_blocking_cars
 
 N = 6
 EMPTY_SPACE = '.'
-ICE_CREAM_TRUCK = 'A'
 START_ROW = 2
 PLIES = {}
 
@@ -46,6 +45,7 @@ class GeneralSolver(Solver):
 
 class AStarSolverRush(GeneralSolver):
     def __init__(self,
+                 heuristic = None,
                  goal_builder_class=None,
                  value_estimator_class=None,
                  max_tree_size=None,
@@ -58,7 +58,8 @@ class AStarSolverRush(GeneralSolver):
         self.value_estimator_class = value_estimator_class
         self.goal_builder = self.goal_builder_class()
         self.value_estimator = self.value_estimator_class()
-
+        self.heuristic = heuristic
+        
     def construct_networks(self):
 
         self.value_estimator.construct_networks()
@@ -77,11 +78,11 @@ class AStarSolverRush(GeneralSolver):
         root= "A*"
         board = convert_to_6x6_char_list(board_strings[0])
         solve_time_start = time.time()
-        path = a_star_solver(board)
+        path = a_star_solver(self, board)
         solve_time = time.time() - solve_time_start
         # print('Solved length: {} (Optimal path length: {}), Number of nodes: {}, Time: {}'.format(path[2], input['opt_solve'], path[1],solve_time ))
         tree_metrics = { 
-                'method' :"A*_zero",     
+                'method' :"A*_" + self.heuristic,     
                 'board' : input['board_string'] ,       
                 'nodes' : path[1],
                 'solve_length': path[2],
@@ -148,7 +149,7 @@ def get_next_states(board):
 def copy_board(board):
   return [_[:] for _ in board]
 
-def a_star_solver(board):
+def a_star_solver(self, board):
     start = board
 
     def is_goal(board):
@@ -168,7 +169,7 @@ def a_star_solver(board):
         if is_goal(current):
             path, moves = backtrack_path(current, parents)  # Use the parents dictionary to backtrack the solution path
             # print_path(path)
-            return path, visited_count, depth
+            return path, visited_count, depth+1 #add one move as the exit move is not counted
 
         visited.add(board_str(current))
         visited_count += 1
@@ -176,7 +177,7 @@ def a_star_solver(board):
         for next_state, move in get_next_states(current):
             if board_str(next_state) not in visited:
                 parents[board_str(next_state)] = (current, move)  # Record the parent state and the move that led to next_state
-                estimated_cost_to_goal = num_blocking_cars(next_state)
+                estimated_cost_to_goal = num_blocking_cars(next_state, self.heuristic) + depth #cost to goal is number of blocks + the current depth
                 heapq.heappush(queue, (estimated_cost_to_goal, depth + 1, next_state))
 
     return None, visited_count, None

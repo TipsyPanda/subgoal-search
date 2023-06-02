@@ -11,7 +11,8 @@
                 "--config_file=configs/rush/solve/baselineBFS.gin",
                 "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
                 "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
-                "--config=JobSolveRushBfs.n_jobs=1"
+                "--config=JobSolveRushBfs.n_jobs=1",
+                "--config=JobSolveRushBfs.nr_problems=10000",
             ],
             "env": {
                 "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
@@ -19,7 +20,7 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "A* Rush",
+            "name": "A* Rush - ADV",
             "type": "python",
             "request": "launch",
             "python": "/opt/conda/bin/python",
@@ -28,7 +29,47 @@
                 "--config_file=configs/rush/solve/baselineAStar.gin",
                 "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
                 "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
-                "--config=JobSolveRushAStar.n_jobs=1"
+                "--config=JobSolveRushAStar.n_jobs=1",
+                "--config=JobSolveRushAStar.nr_problems=10000",
+                "--config=heuristic = 'advanced'"
+            ],
+            "env": {
+                "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
+            },
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "A* Rush - Simple",
+            "type": "python",
+            "request": "launch",
+            "python": "/opt/conda/bin/python",
+            "program": "/home/yannick_schmid/subgoal-search/runner.py",
+            "args": [
+                "--config_file=configs/rush/solve/baselineAStar.gin",
+                "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
+                "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
+                "--config=JobSolveRushAStar.n_jobs=1",
+                "--config=JobSolveRushAStar.nr_problems=10000",
+                "--config=heuristic = 'simple'"
+            ],
+            "env": {
+                "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
+            },
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "A* Rush - Zero",
+            "type": "python",
+            "request": "launch",
+            "python": "/opt/conda/bin/python",
+            "program": "/home/yannick_schmid/subgoal-search/runner.py",
+            "args": [
+                "--config_file=configs/rush/solve/baselineAStar.gin",
+                "--config=ValueEstimatorRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_value\"",
+                "--config=VanillaPolicyRush.checkpoint_path=\"/home/yannick_schmid/subgoal-search/subgoal-search-resources/rush/rush_vanilla_policy\"",
+                "--config=JobSolveRushAStar.n_jobs=1",
+                "--config=JobSolveRushAStar.nr_problems=10000",
+                "--config=heuristic = 'zero'"
             ],
             "env": {
                 "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"

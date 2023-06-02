@@ -6,17 +6,25 @@
 
 run.job_class = @jobs.JobSolveRushAStar
 
+heuristic = 'advanced'
+
+JobSolveRushAStar.nr_problems = 2
+
+
 JobSolveRushAStar.n_jobs = 1
 JobSolveRushAStar.n_parallel_workers = 3
 JobSolveRushAStar.batch_size = 100
 JobSolveRushAStar.solver_class = @solvers.AStarSolverRush
 JobSolveRushAStar.budget_checkpoints = [50, 100, 200, 400, 500, 1000, 2000, 4000, 5000, 20000]
 JobSolveRushAStar.log_solutions_limit = 100
+JobSolveRushAStar.heuristic = %heuristic
 
 AStarSolverRush.max_tree_depth = 90
 AStarSolverRush.max_tree_size = 6000
 AStarSolverRush.value_estimator_class = @value_estimators.ValueEstimatorRush
 AStarSolverRush.goal_builder_class = @policies.VanillaPolicyRush
+
+AStarSolverRush.heuristic = %heuristic
 
 VanillaPolicyRush.n_actions = 4
 VanillaPolicyRush.num_beams = 32
