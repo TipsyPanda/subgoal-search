@@ -12,9 +12,6 @@
                 "--config=JobSolveRushBfs.n_jobs=1",
                 "--config=JobSolveRushBfs.nr_problems=10000",
             ],
-            "env": {
-                "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
-            },
             "console": "integratedTerminal"
         },
         {
@@ -28,9 +25,6 @@
                 "--config=JobSolveRushAStar.nr_problems=10000",
                 "--config=heuristic = 'advanced'"
             ],
-            "env": {
-                "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
-            },
             "console": "integratedTerminal"
         },
         {
@@ -41,12 +35,9 @@
             "program": "/home/yannick_schmid/subgoal-search/runner.py",
             "args": [
                 "--config_file=configs/rush/solve/baselineAStar.gin",
-                "--config=JobSolveRushAStar.nr_problems=10000",
+                "--config=JobSolveRushAStar.nr_problems=10",
                 "--config=heuristic = 'simple'"
             ],
-            "env": {
-                "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
-            },
             "console": "integratedTerminal"
         },
         {
@@ -63,9 +54,6 @@
                 "--config=JobSolveRushAStar.nr_problems=10000",
                 "--config=heuristic = 'zero'"
             ],
-            "env": {
-                "KSUBS_RESOURCES": "/home/yannick_schmid/subgoal-search/subgoal-search-resources"
-            },
             "console": "integratedTerminal"
         },
         {

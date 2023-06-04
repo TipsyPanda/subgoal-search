@@ -66,7 +66,6 @@ class AStarSolverRush(GeneralSolver):
         self.goal_builder.construct_networks()
 
     def solve(self, input):
-        PLIES = {}
         board_strings = input['board_string'] 
         additional_info= board_strings
         board_strings = rush_solver_utils.update_board_representation(board_strings)
